@@ -1,0 +1,4 @@
+class InvalidCryptoNameException(Exception):
+    pass
+
+
