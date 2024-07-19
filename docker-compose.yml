@@ -1,0 +1,7 @@
+version: '2.27'
+services:
+  bot:
+    build: .
+    command: python bot.py
+    volumes:
+      - .:/cryptocurrency-traker_tgbot
