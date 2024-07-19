@@ -17,8 +17,7 @@
 ```
 git clone git@github.com:RadiATsiyA/cryptocurrency-traker_tgbot.git
 ```
-2. Перейдите в директорию репозитория
-<br> 
+2. Перейдите в директорию репозитория<br> 
 ```
 cd cryptocurrency-traker_tgbot
 ```
