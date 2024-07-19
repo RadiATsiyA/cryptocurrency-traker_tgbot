@@ -5,7 +5,6 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.filters import CommandStart, Command
-from aiogram.types import Message
 
 from exceptions import InvalidCryptoNameException
 from models import CryptoTrackInfo
@@ -25,7 +24,7 @@ class TrackCrypto(StatesGroup):
 
 @dp.message(CommandStart())
 async def send_welcome(message: types.Message):
-    await message.answer("Привет! \n Для остлеживания криптовалюты используй команду /crypto")
+    await message.answer("Привет! \n Для остлеживания криптовалюты используй команду /track")
 
 
 @dp.message(Command("track"))
