@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, Boolean, select, insert, update
+from sqlalchemy import Column, Integer, String, Float, Boolean, select, insert, update, or_
 
 from database import Base, async_session_maker
 
@@ -15,7 +15,16 @@ class CryptoTrackInfo(Base):
     max_notified = Column(Boolean, default=False)
 
     @classmethod
-    async def update_crypto_thresholds_by_id(cls, id, **data):
+    async def find_all_unchecked(cls):
+        async with async_session_maker() as session:
+            query = select(CryptoTrackInfo).where(
+                or_(CryptoTrackInfo.min_notified == False, CryptoTrackInfo.max_notified == False)
+            )
+            result = await session.execute(query)
+            return result.scalars().all()
+
+    @classmethod
+    async def update_crypto_thresholds_by_id(cls, id: int, **data):
         async with async_session_maker() as session:
             query = update(cls).where(cls.id == id).values(**data)
             result = await session.execute(query)
@@ -24,14 +33,14 @@ class CryptoTrackInfo(Base):
             await session.commit()
 
     @classmethod
-    async def get_crypto_thresholds_by_chat_id(cls, chat_id):
+    async def get_crypto_thresholds_by_chat_id(cls, chat_id: int):
         async with async_session_maker() as session:
             query = select(cls).filter_by(chat_id=chat_id)
             result = await session.execute(query)
             return result.scalars().all()
 
     @classmethod
-    async def add_crypto_threshold(cls, crypto_name, min_threshold, max_threshold, chat_id):
+    async def add_crypto_threshold(cls, crypto_name: str, min_threshold: float, max_threshold: float, chat_id: int):
         async with async_session_maker() as session:
             query = insert(cls).values(
                 crypto_name=crypto_name,
