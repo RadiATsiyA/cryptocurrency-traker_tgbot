@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine, pool
 from alembic import context
-from database import Base
+from database import Base  # Adjust this import if Base is defined elsewhere
+from models import CryptoTrackInfo  # Import your model here
 
 target_metadata = Base.metadata
 
